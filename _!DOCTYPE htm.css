@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuroLife App</title>
+
+<!-- Gráficos -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #0f172a;
+  color: white;
+}
+
+/* Header */
+.header {
+  background: #020617;
+  padding: 15px;
+  text-align: center;
+  font-size: 20px;
+  color: #38bdf8;
+  position: sticky;
+  top: 0;
+}
+
+/* Container */
+.container {
+  padding: 15px;
+  padding-bottom: 80px;
+}
+
+/* Cards */
+.card {
+  background: #1e293b;
+  padding: 15px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* Input IA */
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  margin-top: 10px;
+}
+
+/* Botão */
+button {
+  margin-top: 10px;
+  background: #38bdf8;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Chat IA */
+.chat {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #020617;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.navbar div {
+  font-size: 12px;
+}
+
+/* Destaque */
+.highlight {
+  color: #38bdf8;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">NeuroLife Tech 🧠</div>
+
+<div class="container">
+
+  <!-- Perfil -->
+  <div class="card">
+    <h3>👋 Olá, Usuário</h3>
+    <p>Produtividade: <span class="highlight">Alta</span></p>
+  </div>
+
+  <!-- Gráfico -->
+  <div class="card">
+    <h3>📊 Desempenho da Semana</h3>
+    <canvas id="grafico"></canvas>
+  </div>
+
+  <!-- Dados -->
+  <div class="card">
+    <h3>📱 Dados do Dia</h3>
+    <p>Sono: 6h ⚠️</p>
+    <p>Foco: 80% ✅</p>
+    <p>Celular: 5h 📱</p>
+  </div>
+
+  <!-- IA -->
+  <div class="card">
+    <h3>🧠 Assistente IA</h3>
+    <p>Pergunte algo:</p>
+    <input id="pergunta" placeholder="Ex: Como melhorar meu foco?">
+    <button onclick="responder()">Perguntar</button>
+    <div class="chat" id="resposta"></div>
+  </div>
+
+</div>
+
+<div class="navbar">
+  <div>🏠 Home</div>
+  <div>📊 Dados</div>
+  <div>🧠 IA</div>
+  <div>⚙️ Config</div>
+</div>
+
+<script>
+// Gráfico real
+const ctx = document.getElementById('grafico');
+
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+    datasets: [{
+      label: 'Produtividade (%)',
+      data: [60, 70, 80, 75, 85, 90, 78],
+      borderWidth: 2
+    }]
+  }
+});
+
+// IA simulada
+function responder() {
+  let pergunta = document.getElementById("pergunta").value.toLowerCase();
+  let resposta = "";
+
+  if (pergunta.includes("foco")) {
+    resposta = "💡 Tente estudar em blocos de 25 minutos (técnica Pomodoro).";
+  } 
+  else if (pergunta.includes("sono")) {
+    resposta = "😴 Dormir pelo menos 7-8 horas melhora muito sua produtividade.";
+  }
+  else if (pergunta.includes("produtividade")) {
+    resposta = "🚀 Organize seu dia com prioridades claras e evite distrações.";
+  }
+  else {
+    resposta = "🤖 Estou aprendendo! Tente perguntar sobre foco, sono ou produtividade.";
+  }
+
+  document.getElementById("resposta").innerHTML = resposta;
+}
+</script>
+
+</body>
+</html>
