@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuroLife</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, sans-serif;
+  background: linear-gradient(#020617, #0f172a);
+  color: white;
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity:0;}
+  to {opacity:1;}
+}
+
+.screen {
+  max-width: 390px;
+  margin: auto;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  padding: 15px;
+  font-weight: bold;
+  color: #38bdf8;
+}
+
+/* Cards */
+.card {
+  background: rgba(30,41,59,0.8);
+  margin: 15px;
+  padding: 15px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+/* Chat */
+.chat-box {
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+.msg {
+  margin: 5px 0;
+}
+
+.user {color: #38bdf8;}
+.bot {color: #22c55e;}
+
+/* Input */
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+}
+
+button {
+  margin-top: 5px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #38bdf8;
+  font-weight: bold;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 390px;
+  display: flex;
+  justify-content: space-around;
+  background: rgba(2,6,23,0.9);
+  padding: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="screen">
+
+<div class="header">NeuroLife 🧠</div>
+
+<div class="card">
+<h3>📊 Dashboard</h3>
+<canvas id="grafico1"></canvas>
+<canvas id="grafico2"></canvas>
+</div>
+
+<div class="card">
+<h3>🧠 Chat IA</h3>
+
+<div class="chat-box" id="chat"></div>
+
+<input id="msg" placeholder="Digite sua pergunta...">
+<button onclick="enviar()">Enviar</button>
+</div>
+
+</div>
+
+<div class="navbar">
+<div>🏠</div>
+<div>📊</div>
+<div>💬</div>
+<div>⚙️</div>
+</div>
+
+<script>
+
+// GRÁFICOS
+new Chart(document.getElementById('grafico1'), {
+  type: 'line',
+  data: {
+    labels: ['Seg','Ter','Qua','Qui','Sex'],
+    datasets: [{label:'Produtividade', data:[60,70,80,75,90]}]
+  }
+});
+
+new Chart(document.getElementById('grafico2'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Foco','Distração'],
+    datasets: [{data:[70,30]}]
+  }
+});
+
+// CHAT IA CONTÍNUO
+function enviar(){
+  let input = document.getElementById("msg");
+  let texto = input.value;
+
+  if(!texto) return;
+
+  adicionarMsg("Você: " + texto, "user");
+
+  let resposta = gerarResposta(texto.toLowerCase());
+  setTimeout(() => {
+    adicionarMsg("IA: " + resposta, "bot");
+  }, 500);
+
+  input.value = "";
+}
+
+function adicionarMsg(texto, tipo){
+  let div = document.createElement("div");
+  div.className = "msg " + tipo;
+  div.innerText = texto;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+// IA MELHORADA
+function gerarResposta(p){
+  if(p.includes("foco")) return "📚 Use técnica Pomodoro.";
+  if(p.includes("sono")) return "😴 Tente dormir 7-8h.";
+  if(p.includes("ansiedade")) return "🧘 Respire fundo e desacelere.";
+  if(p.includes("produtividade")) return "🚀 Organize prioridades.";
+
+  let respostas = [
+    "💡 Continue evoluindo!",
+    "🤖 Você está indo bem!",
+    "📈 Pequenos hábitos fazem diferença!"
+  ];
+  return respostas[Math.floor(Math.random()*respostas.length)];
+}
+
+</script>
+
+</body>
+</html>
